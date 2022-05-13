@@ -13,7 +13,7 @@ class Round
     start_message
     
     until @deck.count == 0
-      show_card
+      show_card_and_take_user_guess
     end
 
     end_message
@@ -37,8 +37,7 @@ class Round
     end
   end
   
-
-  def show_card
+  def show_card_and_take_user_guess
     puts "This is card number #{@counter} out of #{@number_of_cards}."
     puts "Question: #{current_card.question}"
     guess = gets.chomp
@@ -47,7 +46,6 @@ class Round
     @counter += 1
   end
   
-
   def current_card
     @deck.cards.first
   end
