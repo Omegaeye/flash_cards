@@ -1,5 +1,3 @@
-require "pry"
-
 class CardGenerator
   def initialize(filename)
     @filename = filename

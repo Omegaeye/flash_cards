@@ -2,11 +2,11 @@ class Round
   attr_reader :deck, :turns, :number_correct
 
   def initialize(deck)
-    @deck = deck
-    @turns = []
-    @number_of_cards = deck.count
-    @number_correct = 0
     @counter = 1
+    @deck = deck
+    @number_correct = 0
+    @number_of_cards = deck.count
+    @turns = []
   end
 
   def start
@@ -19,9 +19,8 @@ class Round
     end_message
   end
 
-  def start_message
-    puts "Welcome! You're playing with #{@number_of_cards} cards."
-    puts "-------------------------------------------------"
+  def current_card
+    @deck.cards.first
   end
 
   def end_message
@@ -37,30 +36,9 @@ class Round
     end
   end
   
-  def show_card_and_take_user_guess
-    puts "This is card number #{@counter} out of #{@number_of_cards}."
-    puts "Question: #{current_card.question}"
-    guess = gets.chomp
-    turn = take_turn(guess)
-    puts turn.feedback
-    @counter += 1
-  end
-  
-  def current_card
-    @deck.cards.first
-  end
-  
-  def take_turn(guess)
-    turn = Turn.new(guess, current_card)
-    @turns << turn
-    @number_correct += 1 if turn.correct?
-    @deck.cards.shift
-    turn
-  end
-
   def number_correct_by_category(category)
     number_correct_by_category = 0
-
+    
     @turns.each do |turn|
       if turn.card.category == category
         if turn.correct?
@@ -82,5 +60,27 @@ class Round
     end.size
 
    (number_correct_by_category(category) * 100) / turns_by_category_count
+  end
+
+  def start_message
+    puts "Welcome! You're playing with #{@number_of_cards} cards."
+    puts "-------------------------------------------------"
+  end
+  
+  def show_card_and_take_user_guess
+    puts "This is card number #{@counter} out of #{@number_of_cards}."
+    puts "Question: #{current_card.question}"
+    guess = gets.chomp
+    turn = take_turn(guess)
+    puts turn.feedback
+    @counter += 1
+  end
+
+  def take_turn(guess)
+    turn = Turn.new(guess, current_card)
+    @turns << turn
+    @number_correct += 1 if turn.correct?
+    @deck.cards.shift
+    turn
   end
 end
