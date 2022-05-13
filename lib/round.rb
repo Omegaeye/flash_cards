@@ -35,7 +35,6 @@ class Round
     categories.uniq.each do |category|
       puts "#{category} - #{percent_correct_by_category(category)}% correct"
     end
-
   end
   
 
